@@ -1,0 +1,55 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+  color: #333;
+}
+
+header {
+  background: #0078d4;
+  color: white;
+  padding: 1.5em;
+  text-align: center;
+}
+
+.controls {
+  padding: 1em;
+  text-align: center;
+}
+
+select {
+  padding: 0.5em;
+  font-size: 1em;
+}
+
+.comparison {
+  max-width: 900px;
+  margin: 1em auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75em;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background: #eee;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 1em;
+  background: #0078d4;
+  color: white;
+}
