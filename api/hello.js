@@ -1,6 +1,9 @@
-export default async function (context, req) {
-  context.res = {
-    status: 200,
-    body: "Hello from Azure API!"
-  }
+export async function onRequest(context) {
+  return new Response(
+    JSON.stringify({ message: "Hello from Azure Static Web Apps API!" }),
+    {
+      headers: { "Content-Type": "application/json" },
+      status: 200,
+    }
+  );
 }
