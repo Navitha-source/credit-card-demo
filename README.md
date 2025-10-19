@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🌐Static Web Apps Examples</h1>
+  <h1>🌐Static Web Apps Examples </h1>
 
   [<img src="media/icons/ai-studio.svg" alt="OpenAI" width="24" height="24" /> ](#azure-static-web-apps--ai)
    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
