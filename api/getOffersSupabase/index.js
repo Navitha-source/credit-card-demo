@@ -13,7 +13,7 @@ module.exports = async function (context, req) {
   }
 
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/credit_card_offers`, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/credit_cards`, {
       headers: {
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
