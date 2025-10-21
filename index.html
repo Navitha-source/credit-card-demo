@@ -3,27 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Credit Card Offers</title>
+  <title>Credit Card Comparison</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>💳 Credit Card Offers</h1>
-    <p>Compare joining fees, rewards, and benefits easily</p>
+    <h1>💳 Credit Card Comparison</h1>
+    <p>Find the best offers from top banks in India</p>
   </header>
 
-  <section id="filters">
+  <section id="controls">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="🔍 Search by card or bank name..."
+    />
+
+    <select id="typeFilter">
+      <option value="">All Types</option>
+      <option value="Rewards">Rewards</option>
+      <option value="Travel">Travel</option>
+      <option value="Cashback">Cashback</option>
+      <option value="Business">Business</option>
+    </select>
+
     <select id="sortSelect">
-      <option value="annual_fee">Sort by Annual Fee</option>
-      <option value="joining_fee">Sort by Joining Fee</option>
-      <option value="cashback_percent">Sort by Cashback %</option>
+      <option value="">Sort By</option>
+      <option value="annual_fee">Annual Fee</option>
+      <option value="joining_fee">Joining Fee</option>
+      <option value="cashback_percent">Cashback %</option>
     </select>
   </section>
 
   <main id="cardContainer" class="grid"></main>
 
   <footer>
-    <p>Powered by Azure Static Web App + Supabase</p>
+    <p>Built with ❤️ using Azure Static Web Apps & Supabase</p>
   </footer>
 
   <script src="script.js"></script>
