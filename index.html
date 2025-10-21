@@ -4,44 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Credit Card Comparison</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Compare Credit Cards</h1>
-    <p>Find the best card for travel, cashback, or everyday use.</p>
-  </header>
+  <h1>Credit Card Comparison</h1>
+  <div id="cards"></div>
 
-  <section class="controls">
-    <label for="filter">Filter by Type:</label>
-    <select id="filter">
-      <option value="all">All</option>
-      <option value="travel">Travel</option>
-      <option value="cashback">Cashback</option>
-      <option value="general">General</option>
-    </select>
-  </section>
-
-  <section class="comparison">
-    <table id="cardTable">
-      <thead>
-        <tr>
-          <th onclick="sortTable(0)">Card Name</th>
-          <th onclick="sortTable(1)">Rewards</th>
-          <th onclick="sortTable(2)">Annual Fee</th>
-          <th onclick="sortTable(3)">Best For</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Rows will be injected by JS -->
-      </tbody>
-    </table>
-  </section>
-
-  <footer>
-    <p>© 2025 CreditCompare. All rights reserved.</p>
-  </footer>
-
-  <script src="script.js"></script>
+  <script>
+    async function loadCards() {
+      const res = await fetch('/api/getOffersSupabase');
+      const cards = await res.json();
+      const container = document.getElementById('cards');
+      container.innerHTML = cards.map(c => `
+        <div class="card">
+          <h3>${c.bank_name} - ${c.card_name}</h3>
+          <p><b>Rewards:</b> ${c.reward_points}</p>
+          <p><b>Annual Fee:</b> ₹${c.annual_fee}</p>
+        </div>
+      `).join('');
+    }
+    loadCards();
+  </script>
 </body>
 </html>
