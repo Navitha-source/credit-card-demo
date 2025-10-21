@@ -3,6 +3,9 @@ const container = document.getElementById("cardContainer");
 const sortSelect = document.getElementById("sortSelect");
 const searchInput = document.getElementById("searchInput");
 const typeFilter = document.getElementById("typeFilter");
+const modal = document.getElementById("cardModal");
+const modalDetails = document.getElementById("modalDetails");
+const closeBtn = document.querySelector(".close");
 
 let allCards = [];
 
@@ -26,8 +29,8 @@ function renderCards(cards) {
 
   container.innerHTML = cards
     .map(
-      (card) => `
-    <div class="card">
+      (card, index) => `
+    <div class="card" onclick="openModal(${index})">
       <h2>${card.card_name}</h2>
       <div class="bank">${card.bank_name}</div>
       <div class="tags">
@@ -36,14 +39,37 @@ function renderCards(cards) {
       </div>
       <p><b>Joining Fee:</b> ₹${card.joining_fee}</p>
       <p><b>Annual Fee:</b> ₹${card.annual_fee}</p>
-      <p><b>Rewards:</b> ${card.reward_points}</p>
-      <p><b>Welcome Offer:</b> ${card.welcome_offer}</p>
     </div>`
     )
     .join("");
 }
 
-// 🔍 Search, filter, and sort
+function openModal(index) {
+  const card = allCards[index];
+  modalDetails.innerHTML = `
+    <h2>${card.card_name}</h2>
+    <h4>${card.bank_name}</h4>
+    <p><b>Type:</b> ${card.card_type}</p>
+    <p><b>Annual Fee:</b> ₹${card.annual_fee}</p>
+    <p><b>Joining Fee:</b> ₹${card.joining_fee}</p>
+    <p><b>Cashback:</b> ${card.cashback_percent || "N/A"}%</p>
+    <p><b>Rewards:</b> ${card.reward_points}</p>
+    <p><b>Welcome Offer:</b> ${card.welcome_offer}</p>
+    <p><b>Benefits:</b> ${card.benefits || "Not available"}</p>
+    <a href="${card.apply_link || '#'}" target="_blank">
+      <button class="apply-btn">Apply Now</button>
+    </a>
+  `;
+  modal.classList.remove("hidden");
+}
+
+// Close modal logic
+closeBtn.onclick = () => modal.classList.add("hidden");
+window.onclick = (e) => {
+  if (e.target === modal) modal.classList.add("hidden");
+};
+
+// Filters
 function applyFilters() {
   const searchVal = searchInput.value.toLowerCase();
   const typeVal = typeFilter.value;
@@ -70,7 +96,6 @@ function applyFilters() {
   renderCards(filtered);
 }
 
-// Event listeners
 [searchInput, typeFilter, sortSelect].forEach((el) =>
   el.addEventListener("input", applyFilters)
 );
