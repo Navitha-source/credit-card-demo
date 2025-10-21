@@ -1,49 +1,60 @@
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f9fafb;
+  background: #f7f9fc;
   color: #222;
-  line-height: 1.6;
 }
 
 header {
-  text-align: center;
-  padding: 3rem 1rem;
-  background: linear-gradient(135deg, #004aad, #0078d4);
+  background: #0078d4;
   color: white;
+  text-align: center;
+  padding: 1.5rem;
 }
 
-.cards {
+#filters {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
+  margin: 1rem 0;
+}
+
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .card {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   padding: 1.5rem;
-  width: 280px;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-4px);
 }
 
-.card img {
-  width: 100%;
-  border-radius: 8px;
+.card h2 {
+  color: #0078d4;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin: 0.3rem 0;
 }
 
 footer {
   text-align: center;
   padding: 1rem;
-  background: #f0f2f5;
-  font-size: 0.9rem;
-  color: #555;
+  background: #f0f0f0;
 }
