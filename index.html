@@ -3,36 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Credit Card Comparison</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .card {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-  </style>
+  <title>Credit Card Offers</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Credit Card Comparison</h1>
-  <div id="cards"></div>
+  <header>
+    <h1>💳 Credit Card Offers</h1>
+    <p>Compare joining fees, rewards, and benefits easily</p>
+  </header>
 
-  <script>
-    async function loadCards() {
-      const res = await fetch('/api/getOffersSupabase');
-      const cards = await res.json();
-      const container = document.getElementById('cards');
-      container.innerHTML = cards.map(c => `
-        <div class="card">
-          <h3>${c.bank_name} - ${c.card_name}</h3>
-          <p><b>Rewards:</b> ${c.reward_points}</p>
-          <p><b>Annual Fee:</b> ₹${c.annual_fee}</p>
-        </div>
-      `).join('');
-    }
-    loadCards();
-  </script>
+  <section id="filters">
+    <select id="sortSelect">
+      <option value="annual_fee">Sort by Annual Fee</option>
+      <option value="joining_fee">Sort by Joining Fee</option>
+      <option value="cashback_percent">Sort by Cashback %</option>
+    </select>
+  </section>
+
+  <main id="cardContainer" class="grid"></main>
+
+  <footer>
+    <p>Powered by Azure Static Web App + Supabase</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
