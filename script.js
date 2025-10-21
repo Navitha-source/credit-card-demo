@@ -70,9 +70,51 @@ function applyFilters() {
   renderCards(filtered);
 }
 
+// 🌙 Theme Toggle
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById("themeToggle");
+  body.classList.toggle("dark");
+
+  if (body.classList.contains("dark")) {
+    btn.textContent = "☀️ Light Mode";
+  } else {
+    btn.textContent = "🌙 Dark Mode";
+  }
+}
+
+// 🔍 Filter/Search
+function filterCards() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const filtered = cards.filter(card =>
+    card.card_name.toLowerCase().includes(query) ||
+    card.bank_name.toLowerCase().includes(query) ||
+    (card.rewards && card.rewards.toLowerCase().includes(query))
+  );
+  renderFilteredCards(filtered);
+}
+
+function renderFilteredCards(filteredCards) {
+  const container = document.getElementById("cards-container");
+  container.innerHTML = "";
+
+  filteredCards.forEach((card) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h2>${card.card_name}</h2>
+      <p>${card.bank_name}</p>
+      <p>${card.rewards}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+
 // Event listeners
 [searchInput, typeFilter, sortSelect].forEach((el) =>
   el.addEventListener("input", applyFilters)
 );
 
 fetchCards();
+
