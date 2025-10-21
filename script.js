@@ -1,56 +1,49 @@
-const cards = [
-  {
-    name: "TravelPlus Platinum",
-    rewards: "3x on travel, 2x on dining",
-    fee: "$95",
-    type: "travel"
-  },
-  {
-    name: "ShopSmart Cashback",
-    rewards: "5% on groceries, 1% on others",
-    fee: "$0",
-    type: "cashback"
-  },
-  {
-    name: "Elite Rewards Gold",
-    rewards: "2x on all purchases",
-    fee: "$75",
-    type: "general"
+const API_URL = "/api/getOffersSupabase";
+const container = document.getElementById("cardContainer");
+const sortSelect = document.getElementById("sortSelect");
+
+async function fetchCards() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    if (!Array.isArray(data)) {
+      container.innerHTML = `<p>Error: API did not return a list</p>`;
+      console.error("Invalid data format", data);
+      return;
+    }
+
+    window.cardData = data;
+    renderCards(data);
+  } catch (err) {
+    container.innerHTML = `<p>Failed to load data</p>`;
+    console.error(err);
   }
-];
-
-function renderTable(filter = "all") {
-  const tbody = document.querySelector("#cardTable tbody");
-  tbody.innerHTML = "";
-
-  const filtered = filter === "all" ? cards : cards.filter(c => c.type === filter);
-
-  filtered.forEach(card => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${card.name}</td>
-      <td>${card.rewards}</td>
-      <td>${card.fee}</td>
-      <td>${card.type.charAt(0).toUpperCase() + card.type.slice(1)}</td>
-    `;
-    tbody.appendChild(row);
-  });
 }
 
-function sortTable(colIndex) {
-  const tbody = document.querySelector("#cardTable tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-  const sorted = rows.sort((a, b) => {
-    const aText = a.children[colIndex].textContent;
-    const bText = b.children[colIndex].textContent;
-    return aText.localeCompare(bText);
-  });
-  tbody.innerHTML = "";
-  sorted.forEach(row => tbody.appendChild(row));
+function renderCards(cards) {
+  container.innerHTML = cards
+    .map(
+      (card) => `
+      <div class="card">
+        <h2>${card.card_name || "Unknown Card"}</h2>
+        <p><b>Bank:</b> ${card.bank_name}</p>
+        <p><b>Type:</b> ${card.card_type}</p>
+        <p><b>Joining Fee:</b> ₹${card.joining_fee}</p>
+        <p><b>Annual Fee:</b> ₹${card.annual_fee}</p>
+        <p><b>Cashback:</b> ${card.cashback_percent}%</p>
+        <p><b>Rewards:</b> ${card.reward_points}</p>
+        <p><b>Welcome Offer:</b> ${card.welcome_offer}</p>
+      </div>
+    `
+    )
+    .join("");
 }
 
-document.getElementById("filter").addEventListener("change", e => {
-  renderTable(e.target.value);
+sortSelect.addEventListener("change", (e) => {
+  const field = e.target.value;
+  const sorted = [...window.cardData].sort((a, b) => a[field] - b[field]);
+  renderCards(sorted);
 });
 
-renderTable();
+fetchCards();
