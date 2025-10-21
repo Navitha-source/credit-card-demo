@@ -21,27 +21,33 @@ async function fetchCards() {
   }
 }
 
-function renderCards(cards) {
-  if (!cards.length) {
-    container.innerHTML = `<p style="text-align:center;">No matching cards found</p>`;
-    return;
-  }
+function renderCards() {
+  const container = document.getElementById("cards-container");
+  container.innerHTML = "";
 
-  container.innerHTML = cards
-    .map(
-      (card, index) => `
-    <div class="card" onclick="openModal(${index})">
-      <h2>${card.card_name}</h2>
-      <div class="bank">${card.bank_name}</div>
-      <div class="tags">
-        <span class="tag">${card.card_type}</span>
-        ${card.cashback_percent ? `<span class="tag">${card.cashback_percent}% Cashback</span>` : ""}
+  cards.forEach((card, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.setAttribute("data-bank", card.bank_name);
+
+    div.innerHTML = `
+      <div class="bank-header">
+        <img src="${card.logo_url || 'https://via.placeholder.com/60'}" alt="${card.bank_name}" class="bank-logo"/>
+        <div>
+          <h2 class="card-name">${card.card_name}</h2>
+          <p class="bank">${card.bank_name}</p>
+        </div>
       </div>
-      <p><b>Joining Fee:</b> ₹${card.joining_fee}</p>
-      <p><b>Annual Fee:</b> ₹${card.annual_fee}</p>
-    </div>`
-    )
-    .join("");
+
+      <p><strong>Type:</strong> ${card.card_type || 'Credit Card'}</p>
+      <p><strong>Annual Fee:</strong> ₹${card.annual_fee || '0'}</p>
+      <p><strong>Rewards:</strong> ${card.rewards || '—'}</p>
+
+      <button class="apply-btn" onclick="openModal(${index})">Apply Now</button>
+    `;
+
+    container.appendChild(div);
+  });
 }
 
 function openModal(index) {
@@ -101,3 +107,4 @@ function applyFilters() {
 );
 
 fetchCards();
+
